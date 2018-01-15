@@ -1,0 +1,35 @@
+
+$white: #fff;
+$blue: #003f90;
+$green: #c9dd30;
+$red: #ff0000;
+$grey: #2a2d34;
+$black: #000;
+
+@function mcdarken($colour) {
+  @return darken($colour, 30%);
+}
+
+@function mclighten($colour) {
+  @return lighten($colour, 30%);
+}
+
+@mixin hover-colour($name, $colour) {
+  .hover-#{$name} {
+    &:hover {
+      color: $colour;
+    }
+  }
+
+  .hover-light-#{$name} {
+    &:hover {
+      color: mclighten($colour);
+    }
+  }
+
+  .hover-dark-#{$name} {
+    &:hover {
+      color: mcdarken($colour);
+    }
+  }
+}
