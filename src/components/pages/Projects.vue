@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import { categories } from '../../store'
+    import { getRaw, getRootUrl } from '../../store'
     import ProjectCategory from '../utils/ProjectCategory'
 
     export default {
@@ -19,8 +19,16 @@
       },
       data () {
         return {
-          categories
+          categories: []
         }
+      },
+      mounted () {
+        let self = this;
+
+        getRaw(`${getRootUrl()}/projects.json`, function (body) {
+          self.categories = JSON.parse(body);
+        });
+
       }
     }
 </script>

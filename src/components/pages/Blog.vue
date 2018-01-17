@@ -22,7 +22,7 @@
     mounted () {
       let self = this;
 
-      getRaw(`${getRootUrl()}/blog/index.json`, function (json) {
+      getRaw(`${getRootUrl()}/blog.json`, function (json) {
         let p = JSON.parse(json);
         self.posts = p.posts;
       });

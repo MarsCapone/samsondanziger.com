@@ -9,12 +9,12 @@
       </div>
 
       <div class="bracketed" slot="fixed-left">
-        <hover-change-link url="mailto:samson@danziger.online" default-value="email" hover-value="samson@danziger.online"></hover-change-link>|<hover-change-link url="https://github.com/marscapone" default-value="github" hover-value="MarsCapone"></hover-change-link>
+        <hover-change-link url="mailto:samson@danziger.online" default-value="email" hover-value="samson@danziger.online"></hover-change-link>|<hover-change-link url="https://github.com/marscapone" default-value="github" hover-value="MarsCapone"></hover-change-link>|<router-link :to="{ name: 'cv' }" tag="a">cv</router-link>
       </div>
 
       <div slot="fixed-right">
         <div class="bracketed">
-          <router-link :to="{ name: 'cv' }" tag="a">cv</router-link>|<router-link :to="{ name: 'contact' }">contact</router-link>|<router-link :to="{ name: blogOrProjects }">{{ blogOrProjects }}</router-link>
+          <router-link :to="{ name: 'contact' }">contact</router-link>|<router-link :to="{ name: 'projects' }">projects</router-link>|<router-link :to="{ name: 'blog' }">blog</router-link>
         </div>
       </div>
     </collapsible-block>

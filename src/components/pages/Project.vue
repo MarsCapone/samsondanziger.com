@@ -7,26 +7,32 @@
 </template>
 
 <script>
-  import { categories, getRaw, getMdUrl } from "../../store"
+  import { getRaw, getMdUrl, getRootUrl } from "../../store"
   import marked from 'marked'
 
   export default {
     name: "project",
     data () {
       return {
+        categories: [],
         category: this.$route.params.category,
         id: this.$route.params.id,
-        compiledMarkdown: ''
+        compiledMarkdown: '',
+        project: {}
       }
     },
-    computed: {
-      project: function () {
-        let cat = categories.find(c => c.name === this.category);
-        return cat.projects.find(p => p.id === this.id);
+    watch: {
+      categories: function (val) {
+        let cat = val.find(c => c.name === this.category);
+        this.project = cat.projects.find(p => p.id === this.id);
       }
     },
     mounted () {
       let self = this;
+
+      getRaw(`${getRootUrl()}/projects.json`, function (body) {
+        self.categories = JSON.parse(body);
+      });
 
       let fetchCb = (body) => {
         if (body === undefined) self.compiledMarkdown = 'error: page content could not be found.';
@@ -34,19 +40,9 @@
       };
 
       if (this.project.url) {
-        switch (this.project.url) {
-          case ('github'):
-            getRaw(getMdUrl(this.category, this.id, false), fetchCb);
-            break;
-          case 'static':
-            getRaw(getMdUrl(this.category, this.id), fetchCb);
-            break;
-          default:
-            getRaw(this.project.url, fetchCb);
-            break;
-        }
+        getRaw(this.project.url, fetchCb);
       } else {
-        this.compiledMarkdown = marked("### Sorry. There is a page here... There's just nothing on it.");
+        getRaw(getMdUrl(this.category, this.id), fetchCb);
       }
     }
   }
