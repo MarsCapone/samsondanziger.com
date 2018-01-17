@@ -10,7 +10,7 @@
 <script>
 
   import { getRaw, getRootUrl } from '../../store'
-  import BlogPostEntry from '@/components/include/BlogPostEntry'
+  import BlogPostEntry from '@/components/utils/BlogPostEntry'
 
   export default {
     name: "blog",

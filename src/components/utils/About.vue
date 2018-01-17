@@ -22,8 +22,8 @@
 </template>
 
 <script>
-  import CollapsibleBlock from "../utils/CollapsibleBlock";
-  import HoverChangeLink from '../utils/HoverChangeLink';
+  import CollapsibleBlock from "./CollapsibleBlock";
+  import HoverChangeLink from './HoverChangeLink';
 
   export default {
     name: "about",

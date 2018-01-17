@@ -9,7 +9,7 @@
 
 <script>
 
-import About from '@/components/include/About'
+import About from '@/components/utils/About'
 
 export default {
   name: 'app',
