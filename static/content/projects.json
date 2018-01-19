@@ -7,7 +7,11 @@
         "name": "Fractal Viewer",
         "id": "fractal-viewer",
         "description": "An application for viewing and exploring fractals. Written in Java.",
-        "url": "github"
+        "url": "github",
+        "repo": {
+          "protocol": "https://",
+          "url": "github.com"
+        }
       },
       {
         "name": "Splat",

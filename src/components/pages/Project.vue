@@ -1,6 +1,7 @@
 <template>
   <div :id="category + '-' + id">
     <h1>{{ project.name }}</h1>
+    <p v-if="project.repo" class="bracketed"><a :href="project.repo.protocol + project.repo.url">{{ project.repo.url }}</a></p>
     <p>{{ project.description }}</p>
     <div class="content" v-html="compiledMarkdown"></div>
   </div>
