@@ -8,6 +8,8 @@ import CV from '@/components/pages/CV'
 import ContactInfo from '@/components/pages/ContactInfo'
 import Project from '@/components/pages/Project'
 
+import DemoPage from '@/components/pages/DemoPage'
+
 import Error404 from '@/components/pages/errors/404'
 
 Vue.use(Router);
@@ -19,6 +21,10 @@ export default new Router({
       path: '/',
       name: 'index',
       component: Projects
+    },
+    {
+      path: '/demo',
+      component: DemoPage
     },
     {
       path: '/projects',

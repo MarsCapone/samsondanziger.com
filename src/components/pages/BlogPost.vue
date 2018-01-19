@@ -6,7 +6,7 @@
       <router-link :to="{ name: 'blogPost', params: {} }">next post --></router-link>
     </div>
 
-    <div>{{ post.title }}</div>
+    <div class="title">{{ post.title }}</div>
     <div v-html="content"></div>
   </div>
 
@@ -49,5 +49,10 @@
     a {
       text-align: center;
     }
+  }
+
+  .title {
+    font-size: 2em;
+    font-weight: bold;
   }
 </style>
