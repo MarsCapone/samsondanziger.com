@@ -1,54 +1,58 @@
 <template>
-  <div :id="category + '-' + id">
-    <h1>{{ project.name }}</h1>
-    <p v-if="project.repo" class="bracketed"><a :href="project.repo.protocol + project.repo.url">{{ project.repo.url }}</a></p>
-    <p>{{ project.description }}</p>
-    <div class="content" v-html="compiledMarkdown"></div>
+  <div>
+    <h1 class="name">{{ project.name }}</h1>
+    <p v-if="project.url" class="bracketed url"><a :href="project.url">{{ niceUrl(project.url) }}</a></p>
+    <p class="description">{{ project.description }}</p>
+    <div class="content">
+      <component :is="currentView"></component>
+    </div>
   </div>
 </template>
 
 <script>
-  import { getRaw, getMdUrl, getRootUrl } from "../../store"
-  import marked from 'marked'
+  import d from '@/data'
+  import NullProject from '@/components/content/NullProject'
 
   export default {
     name: "project",
     data () {
       return {
-        categories: [],
         category: this.$route.params.category,
-        id: this.$route.params.id,
-        compiledMarkdown: '',
+        id: Number(this.$route.params.id),
+        currentView: NullProject,
         project: {}
       }
     },
-    watch: {
-      categories: function (val) {
-        let cat = val.find(c => c.name === this.category);
-        this.project = cat.projects.find(p => p.id === this.id);
+    created () {
+      this.project = d.projects.find(p => p.id === this.id);
+
+      if (this.project.component) {
+        this.currentView = () => import(`../content/${this.project.component}`);
+      } else {
+        this.currentView = () => NullProject;
       }
     },
-    mounted () {
-      let self = this;
-
-      getRaw(`${getRootUrl()}/projects.json`, function (body) {
-        self.categories = JSON.parse(body);
-      });
-
-      let fetchCb = (body) => {
-        if (body === undefined) self.compiledMarkdown = 'error: page content could not be found.';
-        else self.compiledMarkdown = marked(body);
-      };
-
-      if (this.project.url) {
-        getRaw(this.project.url, fetchCb);
-      } else {
-        getRaw(getMdUrl(this.category, this.id), fetchCb);
+    methods: {
+      niceUrl (url) {
+        return url.split('//')[1];
       }
     }
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
+  .url {
+    a {
+      padding: 2px 5px;
+    }
+  }
+
+  .description {
+    font-style: italic;
+  }
+
+  .content {
+    padding: 20px 0;
+  }
 </style>

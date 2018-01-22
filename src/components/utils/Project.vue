@@ -11,7 +11,7 @@
 <script>
   export default {
     name: "project",
-    props: [ 'project', 'category', 'selected' ],
+    props: [ 'project', 'selected' ],
     data () {
       return {
         showDescription: this.selected,
@@ -29,7 +29,7 @@
         this.$router.push({
           name: 'project', params: {
             id: this.project.id,
-            category: this.category.name
+            category: this.project.category
           }
         });
       },

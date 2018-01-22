@@ -2,35 +2,28 @@
   <div id="projects">
     <p>click on category names to show all descriptions, or hover over a specific project.</p>
     <p>starred projects are incomplete.</p>
-    <div v-for="category in categories" v-if="category.projects.length > 0" class="project-category">
-      <project-category :category="category"></project-category>
-    </div>
+
+    <project-category class="project-category hover-dark-red" :projects="projectsByCategory('general')" name="general"></project-category>
+    <project-category class="project-category hover-blue" :projects="projectsByCategory('web')" name="web"></project-category>
+    <project-category class="project-category hover-dark-green" :projects="projectsByCategory('games')" name="games"></project-category>
   </div>
 </template>
 
 <script>
-    import { getRaw, getRootUrl } from '../../store'
-    import ProjectCategory from '../utils/ProjectCategory'
+  import ProjectCategory from '../utils/ProjectCategory'
+  import d from '../../data'
 
-    export default {
-      name: "projects",
-      components: {
-        ProjectCategory
-      },
-      data () {
-        return {
-          categories: []
-        }
-      },
-      mounted () {
-        let self = this;
-
-        getRaw(`${getRootUrl()}/projects.json`, function (body) {
-          self.categories = JSON.parse(body);
-        });
-
+  export default {
+    name: "projects",
+    methods: {
+      projectsByCategory (name) {
+        return d.projects.filter(p => p.category === name);
       }
+    },
+    components: {
+      ProjectCategory
     }
+  }
 </script>
 
 <style lang="scss">
