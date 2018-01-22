@@ -34,7 +34,7 @@
     },
     computed: {
       tags: function () {
-        if (this.post.tags !== undefined) return this.post.tags.join(' | ');
+        if (this.post.tags !== undefined) return this.post.tags.join('|');
         else return '';
       },
       // there is a more recent one
@@ -56,7 +56,7 @@
         this.currentIndex = d.blog.posts.findIndex(p => p.id === this.id);
         this.post = d.blog.posts[this.currentIndex];
         if (this.post.component) {
-          this.currentView = import(`../content/posts/${this.post.component}`);
+          this.currentView = () => import(`../content/posts/${this.post.component}`);
         } else {
           this.currentView = ErrorPost;
         }
@@ -109,5 +109,8 @@
 
   .content {
     padding: 20px 0;
+    margin: auto;
+    text-align: justify;
+    width: 70%;
   }
 </style>
