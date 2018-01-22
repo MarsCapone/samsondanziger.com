@@ -34,7 +34,7 @@
           </tr>
           <tr class="contact-item">
             <td>linkedin</td>
-            <td>...</td>
+            <td><a href="https://www.linkedin.com/in/samson-danziger">linkedin.com/in/samson-danziger</a></td>
           </tr>
         </table>
       </div>
@@ -62,7 +62,7 @@
 
     .contact-section {
       margin: 30px auto;
-      
+
       .qr {
         width: 250px;
 

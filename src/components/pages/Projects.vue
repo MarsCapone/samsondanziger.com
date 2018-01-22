@@ -1,11 +1,16 @@
 <template>
   <div id="projects">
-    <p>click on category names to show all descriptions, or hover over a specific project.</p>
-    <p>starred projects are incomplete.</p>
+    <div v-if="atLeastOne(general) || atLeastOne(web) || atLeastOne(games)">
+      <p>click on category names to show all descriptions, or hover over a specific project.</p>
+      <p>starred projects are incomplete.</p>
 
-    <project-category class="project-category hover-dark-red" :projects="projectsByCategory('general')" name="general"></project-category>
-    <project-category class="project-category hover-blue" :projects="projectsByCategory('web')" name="web"></project-category>
-    <project-category class="project-category hover-dark-green" :projects="projectsByCategory('games')" name="games"></project-category>
+      <project-category v-if="atLeastOne(general)" class="project-category hover-dark-red" :projects="general" name="general" />
+      <project-category v-if="atLeastOne(web)" class="project-category hover-blue" :projects="web" name="web" />
+      <project-category v-if="atLeastOne(games)" class="project-category hover-dark-green" :projects="games" name="games" />
+    </div>
+    <div v-else>
+      there's nothing here right now, <router-link :to="{ name: 'cv' }">check out my CV instead</router-link>.
+    </div>
   </div>
 </template>
 
@@ -15,9 +20,14 @@
 
   export default {
     name: "projects",
+    computed: {
+      general: () => d.projects.filter(p => p.category === 'general'),
+      web: () => d.projects.filter(p => p.category === 'web'),
+      games: () => d.projects.filter(p => p.category === 'games')
+    },
     methods: {
-      projectsByCategory (name) {
-        return d.projects.filter(p => p.category === name);
+      atLeastOne (l) {
+        return l.length > 0;
       }
     },
     components: {
