@@ -9,7 +9,7 @@
       <project-category v-if="atLeastOne(games)" class="project-category hover-dark-green" :projects="games" name="games" />
     </div>
     <div v-else>
-      there's nothing here right now, <router-link :to="{ name: 'cv' }">check out my CV instead</router-link>.
+      there's nothing here right now, <router-link :to="{ name: 'cv' }">check out my cv instead</router-link>.
     </div>
   </div>
 </template>

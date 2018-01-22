@@ -7,6 +7,9 @@
     <div class="post-list" v-if="posts.length > 0">
       <blog-post-entry v-for="post in posts" :key="post.title" :post="post">{{ post.title }}</blog-post-entry>
     </div>
+    <div class="post-list" v-else-if="allPosts.length === 0">
+      there are no posts yet. <router-link :to="{ name: 'cv' }">take a look at my cv instead</router-link>.
+    </div>
     <div class="post-list" v-else>
       sorry, no posts found with that search term
     </div>
