@@ -11,23 +11,23 @@
 
 <script>
   import d from '@/data'
-  import NullProject from '@/components/content/NullProject'
+  import NullProject from '@/components/content/projects/NullProject'
 
   export default {
     name: "project",
     data () {
       return {
         category: this.$route.params.category,
-        id: Number(this.$route.params.id),
+        id: this.$route.params.id,
         currentView: NullProject,
         project: {}
       }
     },
     created () {
-      this.project = d.projects.find(p => p.id === this.id);
+      this.project = d.projects.find(p => (p.id === this.id || p.id === Number(this.id)) && p.category === this.category);
 
       if (this.project.component) {
-        this.currentView = () => import(`../content/${this.project.component}`);
+        this.currentView = () => import(`../content/projects/${this.project.component}`);
       } else {
         this.currentView = () => NullProject;
       }

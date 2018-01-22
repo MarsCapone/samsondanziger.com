@@ -17,7 +17,8 @@
     props: [ 'post' ],
     computed: {
       tags: function () {
-        return this.post.tags.join('|');
+        if (this.post.tags) return this.post.tags.join('|');
+        else return '';
       }
     },
     methods: {

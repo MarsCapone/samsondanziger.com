@@ -2,7 +2,8 @@
 const blog = {
   posts: [
     {
-      name: 'p1'
+      title: 'a title',
+      short: 'a short description'
     }
   ]
 };

@@ -7,14 +7,18 @@
     </div>
 
     <div class="title">{{ post.title }}</div>
-    <div v-html="content"></div>
+    <div class="content">
+      <component :is="currentView"></component>
+    </div>
   </div>
 
 </template>
 
 <script>
-  import { getRaw, getMdUrl, getRootUrl } from "../../store";
-  import marked from 'marked'
+
+  import d from '@/data'
+  import NullPost from '@/components/content/posts/NullPost'
+  import ErrorPost from '@/components/content/posts/ErrorPost'
 
   export default {
     name: "blog-post",
@@ -22,21 +26,16 @@
       return {
         id: this.$route.params.id,
         post: { title: '' },
-        content: undefined
+        currentView: NullPost
       }
     },
-    mounted () {
-      let self = this;
-
-      getRaw(`${getRootUrl()}/blog.json`, function (json) {
-        let p = JSON.parse(json);
-        self.post = p.posts.find(p => p.id === self.id);
-      });
-
-      getRaw(getMdUrl('blog', self.id, false), function (body) {
-        if (body === undefined) self.content = 'error: page content could not be found.';
-        else self.content = marked(body);
-      });
+    created () {
+      this.post = d.blog.posts.find(p => p.id === this.id);
+      if (this.post.component) {
+        this.currentView = import(`../content/posts/${this.post.component}`);
+      } else {
+        this.currentView = ErrorPost;
+      }
     }
   }
 </script>

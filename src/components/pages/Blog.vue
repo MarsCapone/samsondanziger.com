@@ -15,52 +15,40 @@
 
 <script>
 
-  import { getRaw, getRootUrl } from '../../store'
+  import d from '@/data'
   import BlogPostEntry from '@/components/utils/BlogPostEntry'
   import BlogSearchBar from '@/components/utils/BlogSearchBar'
+
 
   export default {
     name: "blog",
     data () {
       return {
-        allPosts: [],
-        posts: []
+        allPosts: d.blog.posts,
+        posts: d.blog.posts
       }
     },
     methods: {
       filter: function (search) {
-        console.log(JSON.stringify(search));
         this.posts = this.allPosts.filter(p => {
-          console.log(JSON.stringify(p));
-
           let valid = false;
 
           if (search.termRef === 'title' || search.termRef === 'any') {
-            if (p.title.includes(search.term)) valid = true;
+            if (p.title.toLowerCase().includes(search.term.toLowerCase())) valid = true;
           }
 
           if (search.termRef === 'description' || search.termRef === 'any') {
-            if (p.short.includes(search.term)) valid = true;
+            if (p.short.toLowerCase().includes(search.term.toLowerCase())) valid = true;
           }
 
           for (let i = 0; i < search.tags.length; i++) {
             let tag = search.tags[i];
-            if (p.tags.includes(tag)) valid = true;
+            if (p.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())) valid = true;
           }
 
           return valid;
         });
       }
-    },
-    mounted () {
-      let self = this;
-
-      getRaw(`${getRootUrl()}/blog.json`, function (json) {
-        let p = JSON.parse(json);
-        self.allPosts = p.posts;
-        self.posts = self.allPosts;
-      });
-
     },
     components: {
       BlogPostEntry,
